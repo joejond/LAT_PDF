@@ -11,6 +11,7 @@
 #include <cmath>
 #include <QDebug>
 #include "mupdf-document.h"
+#include <QBuffer>
 
 MainWindow::MainWindow(QWidget *parent)
     :QMainWindow(parent)
@@ -41,11 +42,36 @@ MainWindow::~MainWindow()
 
 void MainWindow::openDocument()
 {
+    // ambil filenya
     QString file = QFileDialog::getOpenFileName(this,
-            tr("Open PDF/XPS file"), ".", "PDF (*.pdf);;XPS (*.xps)");
+                     //                           tr("Open PDF/XPS file"), "./", "Image (*.jpg *.jpeg *.png *.gif *.bmp)");
+            tr("Open PDF/XPS file"), "./", "PDF (*.pdf);;XPS (*.xps);; Image (*.jpg *.jpeg *.png *.gif *.bmp)");
     if (file.isEmpty()) {
         return;
     }
+
+    QFile ff(file);
+    if (!ff.open(QIODevice::ReadOnly)) return;
+    QByteArray fba = ff.readAll();
+//    qDebug() <<fba;
+//    QFile file(QFileDialog::getOpenFileName(this,
+//            tr("Open PDF/XPS file"), ".", "PDF (*.pdf);;XPS (*.xps)"));
+//    if (file.fileName().isEmpty()) {
+//        return;
+//    }
+
+//    qDebug()<<file;
+//    if(!file.open(QIODevice::ReadOnly)) return;
+//    QByteArray fBA;
+//    fBA = file.readAll();
+
+//    qDebug()<< fBA;
+//    QBuffer buf(&fBA);
+//    buf.open(QIODevice::ReadOnly);
+
+//    file.open(&buf);
+
+
 
     if (m_page) {
         delete m_page;
@@ -55,7 +81,9 @@ void MainWindow::openDocument()
         delete m_doc;
         m_doc = NULL;
     }
-    m_doc = MuPDF::loadDocument(file);
+    //  load dokumen PDF
+    m_doc = MuPDF::loadDocument(fba);
+
     if (NULL == m_doc) {
         return;
     }
@@ -72,10 +100,13 @@ void MainWindow::openDocument()
         } while (!m_doc->authPassword(password));
     }
 
+    // cek title pdf dan jumlah page
     m_title = m_doc->title();
     m_numPages = m_doc->numPages();
 
     m_index = 0;
+//    qDebug()<< m_doc->page(m_index);
+    // buka halaman pertama
     openPage(0);
 }
 
@@ -159,6 +190,7 @@ void MainWindow::createToolBars()
 
 void MainWindow::openPage(int index)
 {
+    qDebug() << __PRETTY_FUNCTION__ << "buka page ke : "<<index;
     if (m_page) {
         delete m_page;
         m_page = NULL;

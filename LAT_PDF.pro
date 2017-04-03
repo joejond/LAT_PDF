@@ -45,6 +45,6 @@ HEADERS  += mainwindow.h
 # make
 #
 # -------------------------------------------------
-INCLUDEPATH += /home/jono/KANTOR/koding/daunbiru/haliza/qt_lib/mupdf-qt/include
-LIBS += -L/home/jono/KANTOR/koding/daunbiru/haliza/qt_lib/mupdf-qt/build/lib -lmupdf-qt
-LIBS += -L/home/jono/KANTOR/koding/daunbiru/haliza/qt_lib/mupdf-qt/mupdf/build/debug -lmupdf  -ljpeg -lfreetype -lz -ljbig2dec -lcrypto -ldl -lmujs -lopenjpeg
+INCLUDEPATH += /media/jono/dua/home/jono/KANTOR/koding/daunbiru/haliza/qt_lib/mupdf-qt/include
+LIBS += -L/media/jono/dua/home/jono/KANTOR/koding/daunbiru/haliza/qt_lib/mupdf-qt/build/lib -lmupdf-qt
+LIBS += -L/media/jono/dua/home/jono/KANTOR/koding/daunbiru/haliza/qt_lib/mupdf-qt/mupdf/build/debug -lmupdf  -ljpeg -lfreetype -lz -ljbig2dec -lcrypto -ldl -lmujs -lopenjpeg
